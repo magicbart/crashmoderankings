@@ -1,0 +1,74 @@
+<?php
+
+ $title = 'WCR News';
+ $this->headTitle('Home');
+ 
+ $score_submit =
+"If you want to see your highscore(s) appear on the rankings please send a email to brainkiller007[at]gmx[dot]de and attach a video of your highscore where also the score, damage and multiplier is shown. 
+Or upload the video somewhere else (for example youtube) and attach the link. You can send that link also to Brainkiller007 via pm on youtube or on the WCR forum. If you don't have a video of your highscore you can also send a top-5 video or take a pic of your record.
+In each case, if possible, please mention the score, damage and multiplier, the car used, the system used, and the (approximately) date the score was achieved. And of course your name you want to appear on the rankings and the country you are from.
+For example:";
+$score_example =
+"Test Crasher
+USA
+Zone 1/Down Hill Demolition
+9,876,543 x 21 = 207,407,403
+January 1, 2014
+Xbox 60hz (NTSC)
+Supercar";
+
+$info_news = "All movements and new entries in a top-25, new non-glitch PRs and new sink-glitch PRs will be announced here.
+Beside that announcements and info about the WCR and this website will appear here.";
+ ?>
+  
+  <div class="row panel panel-default">
+ <?php echo $this->imageHelper('home.png', array('alt_title' => 'WCR', 'class' => 'col-md-4 no-padding')); ?>
+ <div class="col-md-8">
+ 	<div class="text-center title-header"><h1>Welcome to the World Crash Rankings !</h1><h4>(running since 2005)</h4></div>
+	<div>
+		<p class="h4 text-center">This website is dedicated to highscores in Crash Mode in Burnout 2: Point of Impact. It lists the top 25 best known scores for each zone, best available videos and many other statistics.</p>
+		<p>Scores have been taken from the old www.superhighscore.com website, Xbox Live, www.cyberscore.net, www.vgr-fr.com, www.youtube.com and other rankings, vids and records found on the World Wide Web.</p>
+		
+		<div class ="submit">
+			If you want to see your highscore(s) appear on the rankings, ... <a href="#" onclick ="$('.submit').toggle(); return false;">Read more &#9660;</a>
+		</div>
+		<div class="submit" style="display:none">
+			<p><?php echo nl2br($score_submit);?></p>
+			<p><?php echo nl2br($score_example);?></p>
+			<a href="#" onclick ="$('.submit').toggle(); return false;">&#9650;</a>
+		</div>
+		
+		<p class="h3 text-center small-top-margin">Happy crashing!</p>
+	</div>
+</div>
+</div>
+
+
+ <h1 title="<?php echo $info_news;?>"><?php echo $this->escapeHtml($title); ?></h1>
+ <?php foreach ($news as $new) : ?>
+ 
+ <section class="panel panel-default news">
+ 	<div class="panel-heading">
+ 		<h4><?php echo date('F j, Y - H:i:s', strtotime($this->escapeHtml($new->registration))); ?></h4>
+ 	</div>
+ 	<article class="panel-body">
+ 		<!-- No escaping there, since there are links in news -->
+ 		<?php echo nl2br($new->content);?>
+ 	</article>
+ </section>
+ 
+ <?php endforeach;?>
+ 
+ <div class="text-center">
+ <?php
+ echo $this->paginationControl(
+     $this->news,
+     'sliding',
+     array('partial/paginator.phtml', 'News'),
+     array(
+         'route' => 'news',
+     	'params' => array(),
+     )
+ );
+ ?>
+ </div>

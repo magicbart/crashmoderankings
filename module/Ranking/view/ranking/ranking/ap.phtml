@@ -1,0 +1,25 @@
+<?php
+
+ $title = 'Average Position (AP) Ranking';
+ $this->headTitle($title);
+ $info = "The average of a players top-25 positioning from each zone. For each zone unplaced the value 30 is used.
+To enter this ranking at least 1 score in a zone top-25 is needed.";
+ ?>
+ <h1 title="<?php echo $info;?>"><?php echo $this->escapeHtml($title); ?></h1>
+  <table class="table table-striped table-hover">
+ <?php foreach ($players as $player) : ?>
+ <tr>
+ 	<td class="text-center"><?php echo $this->positionhelper($player->avg_pos_rank, '32px');?></td>
+     <td><?php echo $this->imageHelper('flags/32/'.strtolower($this->escapeHtml($player->country_iso)).'.png', array(
+		    				'alt_title' => $this->escapeHtml($player->country_name),
+		    				'height' => '32px'));;?></td>
+     <td><?php echo $this->playerlink($player);?></td>
+	<td class="text-right"><?php echo $this->escapeHtml($player->avg_pos)?></td>
+ </tr>
+ <?php endforeach; ?>
+ </table>
+ <?php 
+ echo $this->form()->openTag($form);
+ echo $this->formCollection($form);
+ echo $this->form()->closeTag();
+ ?>

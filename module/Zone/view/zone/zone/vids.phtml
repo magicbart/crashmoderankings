@@ -1,0 +1,55 @@
+<?php
+
+ $title = 'Zone ' . $zone->id . ' - ' . $zone->name;
+ $this->headTitle($title);
+ $action = 'vids';
+ 
+ $chart_channel = $this->imagehelper('channels/chart.png',
+ 		array('link' => $zone->top25_channel, 'alt_title' => 'WCR Top25 Playlist', 'height' => '36px'));
+ $best10_channel = $this->imagehelper('channels/10bestvid.png',
+ 		array('link' => $zone->bestvids_channel, 'alt_title' => '10 Best Vids Playlist', 'height' => '36px'));
+ 		
+ $best_info = "Includes the best available videos on this zone";
+?>
+ 
+
+<?php echo $this->zonenav($action, $zone->id);?> 
+<?php echo $this->zoneheader($title, $action, $zone);?>
+ 
+ 
+  <h1><?php echo 'Best Type Vids' ?></h1>
+ <table class="table">
+ <?php foreach ($type_vids as $type => $vid) :  if($vid) :?>
+ <tr>
+     <td>
+     	<?php echo $type;?>
+     </td>
+     <?php echo $this->scorehelper($vid, 'type_vid'); ?>
+ </tr>
+ <?php endif; endforeach; ?>
+ </table>
+
+
+
+ <h1 title="<?php echo $best_info;?>"><?php echo 'Best Score Vids ';
+ //.$this->imagehelper('channels/10bestvid.png', array('link' => $zone->bestvids_channel, 'alt_title' => '10 Best Vids Playlist', 'height' => '48px', 'target' => '_blank'));?></h1>
+ <table class="table">
+ <?php $i = 0;
+ foreach ($score_vids as $vid) : ?>
+ <tr>
+ 	<td class="text-center h3"><?php $i = $i+1; echo $i;?></td>
+     <?php echo $this->scorehelper($vid, 'best_vid'); ?>
+ </tr>
+ <?php endforeach; ?>
+ </table>
+ 
+ <h1 title="<?php echo $best_info;?>"><?php echo 'Best Damage Vids'?></h1>
+ <table class="table">
+ <?php $i = 0;
+ foreach ($damage_vids as $vid) : ?>
+ <tr>
+ 	<td class="text-center h3"><?php $i = $i+1; echo $i;?></td>
+     <?php echo $this->scorehelper($vid, 'damage_vid'); ?>
+ </tr>
+ <?php endforeach; ?>
+ </table>

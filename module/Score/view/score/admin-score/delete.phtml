@@ -1,0 +1,27 @@
+<?php
+
+ $title = 'Delete Score';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <p>Are you sure that you want to delete the following score ? BE EXTREMELY CAREFUL THIS CAN'T BE CANCELLED.
+ </p>
+ <table class="table">
+ <tr>
+ <?php echo $this->scorehelper($this->score); ?>
+ </tr>
+ </table>
+ <?php
+ $url = $this->url('adminscores', array(
+     'action' => 'delete',
+     'id'     => $this->score->id,
+ ));
+ ?>
+ <form action="<?php echo $url; ?>" method="post">
+ <div>
+     <input type="hidden" name="id" value="<?php echo $this->score->id; ?>" />
+     <input type="submit" name="del" value="Yes" />
+     <input type="submit" name="del" value="No" />
+ </div>
+ </form>

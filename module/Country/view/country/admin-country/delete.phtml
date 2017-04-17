@@ -1,0 +1,25 @@
+<?php
+
+ $title = 'Delete Country';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+<?php echo $error;?>
+
+ <p>Are you sure that you want to delete the country 
+     <?php echo $this->escapeHtml($this->country->name); ?> ?
+ </p>
+ <?php
+ $url = $this->url('admincountries', array(
+     'action' => 'delete',
+     'name_url'     => $this->escapehtml($this->country->name_url),
+ ));
+ ?>
+ <form action="<?php echo $url; ?>" method="post">
+ <div>
+     <input type="hidden" name="name_url" value="<?php echo $this->escapehtml($this->country->name_url); ?>" />
+     <input type="submit" name="del" value="Yes" />
+     <input type="submit" name="del" value="No" />
+ </div>
+ </form>

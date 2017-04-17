@@ -1,0 +1,14 @@
+<?php
+
+ $title = 'Edit Country';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <?php
+ $form->setAttribute('action', $this->url('admincountries', array('action' => 'edit', 'name_url' => $this->escapehtml($this->name_url))));
+ $form->prepare();
+
+ echo $error;
+ echo $this->form()->openTag($form);
+ echo $this->formCollection($form);
+ echo $this->form()->closeTag();

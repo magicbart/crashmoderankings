@@ -1,0 +1,83 @@
+<?php
+
+ $title = 'Zone ' . $zone->id . ' - ' . $zone->name;
+ $this->headTitle($title);
+ $action = 'strats';
+ 
+ $info = "Shows the best known strats for this zone.";
+ $img_size = '32px';
+ $top10_info = '10 best scores for that strat';
+ ?>
+ 
+
+<?php echo $this->zonenav($action, $zone->id);?> 
+<?php echo $this->zoneheader($title, $action, $zone);?>
+
+<h1 title="<?php echo $info;?>">Strats</h1>
+ <?php foreach ($strats as $strat) :?>
+<section class="panel panel-default">
+ 	<div class="panel-heading">
+ 		<table class="table text-center no-margin">
+ 		<td class="no-margin col-md-3"><?php if($strat->gc) echo $this->imageHelper('logos/gc.png', array('alt_title' => 'GC', 'height' => $img_size));
+ 		if($strat->xbox) echo $this->imageHelper('logos/xbox.png', array('alt_title' => 'Xbox', 'height' => $img_size));
+ 		if($strat->ps2) echo $this->imageHelper('logos/ps2.png', array('alt_title' => 'PS2', 'height' => $img_size));
+ 		if($strat->hz50) echo $this->imageHelper('logos/50hz_.png', array('alt_title' => '50Hz', 'height' => $img_size));
+ 		if($strat->hz60) echo $this->imageHelper('logos/60hz_.png', array('alt_title' => '60Hz', 'height' => $img_size));
+ 		?></td>
+ 		<td class="h1 col-md-6"><?php echo $strat->name;?></td>
+ 		<td class="col-md-3"><?php
+ 			foreach ($strat->cars as $car) {
+ 				echo $this->imageHelper('cars/'.strtolower(str_replace(' ', '', $car)), array('alt_title' => $car, 'height' => $img_size));
+ 			}
+ 		?></td>
+ 		</table>
+ 	</div>
+ 	<article class="panel-body">
+ 		
+ 		
+ 		<?php echo nl2br($strat->description);?>
+ 		
+ 		
+ 		<div class="row">
+ 		<div class="col-md-6 col-md-offset-3">
+ 		<table class="table table-condensed no-margin">
+ 	<tr>
+	 	<th class="text-center">
+	 		Best Damage
+	 	</th>
+	 	<th></th>
+	 	<th class="text-center">
+	 		Best Multi
+	 	</th>
+	 	<th></th>
+	 	<th class="text-center">
+	 		Best Total
+	 	</th>
+	 </tr>
+ 	<tr>
+	 <td class="text-center"><?php echo number_format($strat->best_damage) ?></td>
+	 <td class="text-center">x</td>
+	 <td class="text-center"><?php echo number_format($strat->best_multi) ?></td>
+	 <td class="text-center">=</td>
+	 <td class="text-center"><?php echo number_format($strat->best_total) ?></td>
+	</tr>
+ 		</table>
+ 		</div>
+ 		</div>
+ 		
+ 		<div class="toggle">
+ 			<h2 title="<?php echo $top10_info;?>"><a href="#" onclick ="$('.toggle').toggle(); return false;">Top10 Scores &#9660;</a></h2>
+ 		</div>
+ 		<div class="toggle" style="display:none">
+ 			<h2 title="<?php echo $top10_info;?>"><a href="#" onclick ="$('.toggle').toggle(); return false;">Top10 Scores &#9650;</a></h2>
+			 <table class="table table-hover">
+			 <?php foreach ($strat->scores as $score) :?>
+			 <tr>
+			 	<?php echo $this->scorehelper($score, 'charts'); ?>
+			 </tr>
+			 <?php endforeach; ?>
+			 </table>
+ 		</div>
+ 	</article>
+ </section>
+ <?php endforeach; ?>

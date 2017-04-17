@@ -1,0 +1,17 @@
+<?php
+
+ $title = 'Players';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <table class="table">
+ <?php foreach ($players as $player) : ?>
+ <tr>
+     <td><?php echo $this->imagehelper('flags/32/'.strtolower($this->escapeHtml($player->country_iso)).'.png', array(
+	    				'alt_title' => $this->escapeHtml($player->country_name),
+     					'class' => 'margin')).$this->playerlink($player); ?></td>
+	 <td><?php echo 'WCR #'.$player->avg_pos_rank.'';?></td>
+ </tr>
+ <?php endforeach; ?>
+ </table>

@@ -1,0 +1,29 @@
+<?php
+
+ $title = 'Strats';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <p>
+     <a href="<?php echo $this->url('homeadmin');?>">Back to admin</a>
+ </p>
+ 
+ <p>
+     <a href="<?php echo $this->url('adminstrats', array('action'=>'add'));?>">Add Strat</a>
+ </p>
+ 
+ <table class="table table-striped table-hover">
+ <?php foreach ($strats as $strat) : ?>
+ <tr>
+ 	<td>
+     <a href="<?php echo $this->url('zone',
+             array('id'=>$strat->zone));?>">Zone <?php echo $strat->zone;?></a>
+     </td>
+     <td><?php echo $strat->name;?></td>
+    	<td><a href="<?php echo $this->url('adminstrats',
+             array('action'=>'edit', 'id'=>$strat->id));?>">Edit</a></td>
+     <td><a href="<?php echo $this->url('adminstrats',
+             array('action'=>'delete', 'id'=>$strat->id));?>">Delete</a></td>
+ </tr>
+ <?php endforeach; ?>
+ </table>

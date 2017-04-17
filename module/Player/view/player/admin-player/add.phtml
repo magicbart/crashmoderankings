@@ -1,0 +1,14 @@
+<?php
+
+ $title = 'Add Player';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <?php
+ $form->setAttribute('action', $this->url('adminplayers', array('action' => 'add')));
+ $form->prepare();
+
+ echo $error;
+ echo $this->form()->openTag($form);
+ echo $this->formCollection($form);
+ echo $this->form()->closeTag();

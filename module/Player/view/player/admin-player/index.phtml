@@ -1,0 +1,26 @@
+<?php
+
+ $title = 'Players';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <p>
+     <a href="<?php echo $this->url('homeadmin');?>">Back to admin</a>
+ </p>
+ <p>
+     <a href="<?php echo $this->url('adminplayers', array('action'=>'add'));?>">Add Player</a>
+ </p>
+ <table class="table">
+ <?php foreach ($players as $player) : ?>
+ <tr>
+     <td><?php echo $player->id; ?></td>
+     <td><?php echo $this->playerlink($player); ?></td>
+     <td><?php echo $this->imagehelper('flags/32/'.strtolower($this->escapeHtml($player->country_iso)).'.png', array(
+	    					'alt_title' => $this->escapeHtml($player->country_name),)); ?></td>
+     <td><a href="<?php echo $this->url('adminplayers',
+             array('action'=>'edit', 'name_url'=>$this->escapehtml($player->name_url)));?>">Edit</a>
+     <td><a href="<?php echo $this->url('adminplayers',
+             array('action'=>'delete', 'name_url'=>$this->escapehtml($player->name_url)));?>">Delete</a></td>
+ </tr>
+ <?php endforeach; ?>
+ </table>

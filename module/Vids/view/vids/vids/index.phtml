@@ -1,0 +1,18 @@
+<?php
+
+ $title = 'Best Vids Playlists';
+ $this->headTitle($title);
+
+ ?>
+
+<h1><?php echo $title;?></h1>
+ 
+ <table class="table">
+ <?php foreach ($playlists as $action => $label) : ?>
+ <tr>
+     <td><a href="<?php echo $this->url('bestvids',
+             array('action'=>$action));?>">
+			 <?php echo $this->escapeHtml($label); ?></a></td>
+ </tr>
+ <?php endforeach; ?>
+ </table>

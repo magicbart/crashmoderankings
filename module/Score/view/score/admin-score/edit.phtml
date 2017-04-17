@@ -1,0 +1,32 @@
+<?php
+
+ $title = 'Edit Score';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <?php
+ $form->setAttribute('action', $this->url('adminscores', array('action' => 'edit', 'id' => $this->id)));
+ $form->prepare();
+
+ //TODO : do not display player, zone
+echo $this->form()->openTag($form);
+ echo $this->formHidden($form->get('id'));
+ echo $this->formHidden($form->get('player'));
+ echo $this->formHidden($form->get('zone'));
+ echo $this->formRow($form->get('score'));
+ echo $this->formRow($form->get('strat'));
+ echo $this->formRow($form->get('damage'));
+ echo $this->formRow($form->get('multi'));
+ echo $this->formRow($form->get('car'));
+ echo $this->formRow($form->get('emulator'));
+ echo $this->formRow($form->get('former_wr'));
+ echo $this->formRow($form->get('proof_type'));
+ echo $this->formRow($form->get('proof_link'));
+ echo $this->formRow($form->get('platform'));
+ echo $this->formRow($form->get('version'));
+ echo $this->formRow($form->get('freq'));
+ echo $this->formRow($form->get('glitch'));
+ echo $this->formRow($form->get('realisation'));
+ echo $this->formRow($form->get('inaccurate'));
+ echo $this->formSubmit($form->get('submit'));
+ echo $this->form()->closeTag();

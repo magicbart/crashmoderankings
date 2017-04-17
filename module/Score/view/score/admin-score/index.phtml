@@ -1,0 +1,35 @@
+<?php
+
+ $title = 'Scores';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <p>
+     <a href="<?php echo $this->url('homeadmin');?>">Back to admin</a>
+ </p>
+ <p>
+     Add Score on :
+     <?php for ($i = 1; $i <= 30; $i++) : ?>
+     	<a href="<?php echo $this->url('adminscores', array('action'=>'add', 'id' => $i));?>"><?php echo $i;?></a><?php if($i<30) echo ' - ';?> 
+     <?php endfor; ?>
+ </p>
+ 
+<h2>Score Search : </h2>
+<?php echo $this->form()->openTag($form);
+ echo $this->formCollection($form);
+ echo $this->form()->closeTag();
+
+ if ($search&&$scores->count()==0) echo '<h2>No scores found</h2>';?>
+ <table class="table">
+ <?php foreach ($scores as $score) : ?>
+ <tr>
+ 	<td>
+     <?php echo $this->scorehelper($score, 'admin');?>
+     </td>
+    	<td><a href="<?php echo $this->url('adminscores',
+             array('action'=>'edit', 'id'=>$score->id));?>">Edit</a></td>
+     <td><a href="<?php echo $this->url('adminscores',
+             array('action'=>'delete', 'id'=>$score->id));?>">Delete</a></td>
+ </tr>
+ <?php endforeach; ?>
+ </table>

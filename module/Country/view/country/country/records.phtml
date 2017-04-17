@@ -1,0 +1,15 @@
+<?php
+
+ $title = $country->name.' National Records';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->imagehelper('flags/64/'.strtolower($this->escapeHtml($country->iso)).'.png',
+     				array('alt_title' => $this->escapeHtml($country->abr), 'height' => '64px')).'  '.$this->escapeHtml($title); ?></h1>
+
+<table class="table table-striped table-hover">
+ <?php foreach ($scores as $score) : ?>
+<tr>
+	<td><?php echo $this->scorehelper($score, 'nr'); ?></td>
+ </tr>
+ <?php endforeach; ?>
+ </table>

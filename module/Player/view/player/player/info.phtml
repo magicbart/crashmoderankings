@@ -1,0 +1,120 @@
+<?php
+
+ $title = $player->name;
+ $this->headTitle($title);
+ $action = "info";
+ $height = '48px';
+ ?>
+ 
+ 
+<?php echo $this->playerheader($action, $player, $platforms);?>
+<?php if (!is_null($player->notes)) :?>
+<div class="row">
+<div class="col-md-2"></div>
+<div class="panel panel-default col-md-8">
+	<div class="h4"><?php echo $player->notes;?></div>
+</div>
+</div>
+<?php endif;?>
+<div class="row">
+<div class="col-md-2"></div>
+<div class="panel panel-default col-md-8">
+	<div class="panel-heading text-center"><h1>Rankings</h1></div>
+	<table class="table table-condensed table-striped">
+		<tr class="h1 text-center">
+			<td title="Average Position"><a href="<?php echo $this->url('rankings',
+        			array('action' => 'ap'));?>">AP</a></td>
+			<td><?php echo $player->avg_pos;?></td>
+			<td><?php echo '#'.$player->avg_pos_rank;?></td>
+		</tr>
+		<tr class="h1 text-center">
+			<td><a href="<?php echo $this->url('rankings',
+        			array('action' => 'total'));?>">Total</a></td>
+			<td><?php echo '$'.number_format($player->total);?></td>
+			<td><?php echo '#'.$this->escapeHtml($player->total_rank);?></td>
+		</tr>
+		<tr class="h1 text-center">
+			<td><a href="<?php echo $this->url('rankings',
+        			array('action' => 'percent'));?>">% WR</a></td>
+			<td><?php echo $player->avg_percent.'%';?></td>
+			<td><?php echo '#'.$player->avg_percent_rank;?></td>
+		</tr>
+		<tr class="h1 text-center">
+			<td><a href="<?php echo $this->url('rankings',
+        			array('action' => 'stars'));?>">Rating</a></td>
+			<td title="<?php echo $player->avg_stars;?>"><?php echo $this->starhelper($player->avg_stars, array('height' => '28px'));?></td>
+			<td><?php echo '#'.$player->avg_stars_rank;?></td>
+		</tr>
+	</table>
+</div>
+</div>
+
+<div class="row">
+<div class="col-md-2"></div>
+<div class="panel panel-default col-md-8">
+	<div class="panel-heading text-center"><h1>Proofs</h1></div>
+	<table class="table table-condensed table-striped">
+	<tr>
+	<td class="score text-center"><?php echo $proofs['Live'].'  '.$this->imageHelper('proofs/live.png', array('alt_title' => 'Live', 'height' => '48px'));?></td>
+	<td class="score text-center"><?php echo $proofs['Replay'].'  '.$this->imageHelper('proofs/replay.png', array('alt_title' => 'Replay', 'height' => '48px'));?></td>
+	<td class="score text-center"><?php echo $proofs['XBL'].'  '.$this->imageHelper('proofs/xbl.png', array('alt_title' => 'XBL', 'height' => '48px'));?></td>
+	<td class="score text-center"><?php echo $proofs['Pic'].'  '.$this->imageHelper('proofs/pic.png', array('alt_title' => 'Pic', 'height' => '48px'));?></td>
+	</tr>
+</table>
+</div>
+</div>
+
+<div class="row">
+<div class="panel panel-default col-md-3">
+	<div class="panel-heading text-center"><h1>Podium Ranks</h1></div>
+	<table class="table table-condensed table-striped">
+	<?php foreach ($podiums as $rank => $nb) :?>
+	<tr>
+	<td class="score text-center"><?php echo $this->positionhelper($rank, $height);?></td>
+	<td class="score text-center"><?php echo $nb;?></td>
+	</tr>
+	<?php endforeach;?>
+</table>
+</div>
+<div class="col-md-1"></div>
+<div class="panel panel-default col-md-3">
+	<div class="panel-heading text-center"><h1>Platforms</h1></div>
+	<table class="table table-condensed table-striped">
+	<?php foreach ($platforms_count as $platform => $nb) :?>
+	<tr>
+	<td class="score text-center"><?php echo $this->imageHelper('logos/'.strtolower($platform).'.png', array('alt_title' => $platform, 'height' => $height));?></td>
+	<td class="score text-center"><?php echo $nb;?></td>
+	</tr>
+	<?php endforeach;?>
+</table>
+</div>
+
+<div class="col-md-1"></div>
+<div class="panel panel-default col-md-4">
+	<div class="panel-heading text-center"><h1>Tops Appearance</h1></div>
+	<table class="table table-condensed table-striped">
+	<?php foreach ($tops as $top => $nb) :?>
+	<tr>
+	<td class="score text-center"><?php echo 'Top '.$top;?></td>
+	<td class="score text-center"><?php echo $nb;?></td>
+	</tr>
+	<?php endforeach;?>
+</table>
+</div>
+</div>
+
+<div class="panel panel-default">
+	<div class="panel-heading text-center"><h1>Cars used</h1></div>
+	<table class="table table-condensed table-striped">
+	<tr><td></td>
+	<?php $i = 1; foreach ($cars as $car_name => $nb) :
+	$car_image = 'cars/'.strtolower(str_replace(' ', '', $car_name));
+	if ($i%6 == 0)
+		echo '</tr><tr>';
+	$i = $i + 1;?>
+	<td class="score text-center"><?php echo $this->imageHelper($car_image, array('alt_title' => $car_name, 'height' => $height)).'  '.$nb;?></td>
+	<?php endforeach;?>
+	<td></td>
+	</tr>
+</table>
+</div>

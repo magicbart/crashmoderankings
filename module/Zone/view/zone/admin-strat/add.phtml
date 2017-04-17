@@ -1,0 +1,28 @@
+<?php
+
+ $title = 'Add Strat';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <?php
+ $form->setAttribute('action', $this->url('adminstrats', array('action' => 'add')));
+ $form->prepare();
+ 
+ echo $this->form()->openTag($form);
+ echo $this->formHidden($form->get('id'));
+ 
+ echo $this->formRow($form->get('zone'));
+ echo $this->formRow($form->get('name'));
+ echo $this->formRow($form->get('description'));
+ echo $this->formRow($form->get('hz50'));
+ echo $this->formRow($form->get('hz60'));
+ echo $this->formRow($form->get('gc'));
+ echo $this->formRow($form->get('xbox'));
+ echo $this->formRow($form->get('ps2'));
+ echo $this->formRow($form->get('best_damage'));
+ echo $this->formRow($form->get('best_multi'));
+ echo $this->formRow($form->get('best_total'));
+ echo $this->formRow($form->get('cars'));
+ 
+ echo $this->formSubmit($form->get('submit'));
+ echo $this->form()->closeTag();

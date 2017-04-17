@@ -1,0 +1,25 @@
+<?php
+
+ $title = 'Total Score Ranking';
+ $this->headTitle($title);
+ $info = "Personal Record from each zone summarized.
+Shows the 50 best known totals.";
+ ?>
+ <h1 title="<?php echo $info;?>"><?php echo $this->escapeHtml($title); ?></h1>
+  <table class="table table-striped table-hover">
+ <?php foreach ($players as $player) : ?>
+ <tr>
+ 	<td class="text-center"><?php echo $this->positionhelper($player->total_rank, '32px');?></td>
+     <td><?php echo $this->imageHelper('flags/32/'.strtolower($this->escapeHtml($player->country_iso)).'.png', array(
+		    				'alt_title' => $this->escapeHtml($player->country_name),
+		    				'height' => '32px'));;?></td>
+     <td><?php echo $this->playerlink($player);?></td>
+	<td class="text-right"><?php echo '$'.number_format($this->escapeHtml($player->total));?></td>
+ </tr>
+ <?php endforeach; ?>
+ </table>
+ <?php 
+ echo $this->form()->openTag($form);
+ echo $this->formCollection($form);
+ echo $this->form()->closeTag();
+ ?>

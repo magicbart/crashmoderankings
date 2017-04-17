@@ -1,0 +1,36 @@
+<?php
+
+ $title = $player->name;
+ $this->headTitle($title);
+ $action = "lastadded";
+ 
+ $info_box = "Latest scores added to database";
+ 
+ ?>
+<?php echo $this->playerheader($action, $player, $platforms);?>
+<div class="panel panel-default">
+	<div class="panel-heading text-center" title="<?php echo $info_box;?>"><h1>Latest Scores Added</h1></div>
+ <table class="table table-striped table-hover">
+	<?php foreach ($latests as $latest) :?>
+	<tr>
+	 <?php echo $this->scorehelper($latest, 'lastadded-player');?>
+	</tr>
+	<?php endforeach;?>
+</table>
+<div class="text-center">
+ <?php
+ echo $this->paginationControl(
+     $this->latests,
+     'sliding',
+     array('partial/paginator.phtml', 'Player'),
+     array(
+         'route' => 'players',
+     	 'params' => array(
+		 	'name_url' => $player->name_url,
+     		'action' => $action
+     	 ),
+     )
+ );
+ ?>
+ </div>
+</div>

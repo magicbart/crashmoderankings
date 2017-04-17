@@ -1,0 +1,55 @@
+<?php
+
+ $title = 'Zone ' . $zone->id . ' - ' . $zone->name;
+ $this->headTitle($title);
+ $action = 'index';
+
+ $info_top25 = "Shows the 25 best known scores for this zone.";
+ $info_ng = "Shows the 10 best known non-glitch scores for this zone.";
+ $info_sink = "Shows the 10 best known sink-glitch scores for this zone.";
+ ?>
+ 
+<?php echo $this->zonenav($action, $zone->id);?> 
+<?php echo $this->zoneheader($title, $action, $zone);?>
+
+<h1 title="<?php echo $info_top25;?>">WCR Top 25</h1>
+ <table class="table table-hover">
+ <?php foreach ($topscores as $topscore) :?>
+ <tr>
+ 	<?php echo $this->scorehelper($topscore, 'charts'); ?>
+ </tr>
+ <?php endforeach; ?>
+ </table>
+ 
+<?php if ($zone->glitch != 'None') :
+  	echo '<h1 title="'.$info_ng.'">Non Glitch Top 10</h1>'; ?>
+ <table class="table table-hover">
+ <?php $i = 0; foreach ($ngs as $ng) :?>
+ <tr>
+ 	<td class="text-center h3"><?php $i = $i+1; echo $i;?></td><?php echo $this->scorehelper($ng, 'unsorted'); ?>
+ </tr>
+ <?php endforeach; ?>
+ </table>
+ <?php endif;?>
+ 
+  <?php if ($freezes->count()) :
+  	echo '<h1>Freezes</h1>'; ?>
+ <table class="table">
+ <?php foreach ($freezes as $freeze) :?>
+ <tr>
+ 	<?php echo $this->scorehelper($freeze, 'freeze'); ?>
+ </tr>
+ <?php endforeach; ?>
+ </table>
+ <?php endif;?>
+ 
+ <?php if ($sinks->count()) :
+  	echo '<h1 title="'.$info_sink.'">Sink Glitch Top 10</h1>'; ?>
+ <table class="table">
+ <?php $i = 0; foreach ($sinks as $sink) :?>
+ <tr>
+ 	<td class="text-center h3"><?php $i = $i+1; echo $i;?></td><?php echo $this->scorehelper($sink, 'unsorted'); ?>
+ </tr>
+ <?php endforeach; ?>
+ </table>
+ <?php endif;?>

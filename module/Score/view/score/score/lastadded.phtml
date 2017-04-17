@@ -1,0 +1,30 @@
+<?php
+
+ $title = 'Latest Scores Added';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <table class="table">
+ <?php foreach ($scores as $score) : ?>
+ <tr>
+     <?php echo $this->scorehelper($score, 'latest-added');?>
+ </tr>
+ <?php endforeach; ?>
+ </table>
+ 
+<div class="text-center">
+ <?php
+ echo $this->paginationControl(
+     $this->scores,
+     'sliding',
+     array('partial/paginator.phtml', 'Score'),
+     array(
+         'route' => 'latest-scores',
+     	 'params' => array(
+     		'action' => 'lastadded'
+     	 ),
+     )
+ );
+ ?>
+ </div>

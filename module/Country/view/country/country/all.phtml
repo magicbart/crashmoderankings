@@ -1,0 +1,19 @@
+<?php
+
+ $title = 'Countries Rankings';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <table class="table table-hover table-striped">
+ <?php foreach ($countries as $country) : ?>
+ <tr>
+     <td><?php echo $this->imagehelper('flags/32/'.strtolower($this->escapeHtml($country->iso)).'.png',
+     				array('alt_title' => $this->escapeHtml($country->abr), 'height' => '32px')).'    '.$this->escapeHtml($country->name); ?></td>
+     <td><a href="<?php echo $this->url('countries',
+             array('name_url' => $this->escapehtml($country->name_url)));?>">Players</a></td>
+	<td><a href="<?php echo $this->url('countries',
+             array('name_url' => $this->escapehtml($country->name_url), 'action' => 'records'));?>">National Records</a></td>
+ </tr>
+ <?php endforeach; ?>
+ </table>

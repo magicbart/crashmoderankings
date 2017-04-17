@@ -1,0 +1,87 @@
+<?php
+
+ $title = 'Zone ' . $zone->id . ' - ' . $zone->name;
+ $this->headTitle($title);
+ $action = 'info';
+ $best_dmg = 'Best Damage';
+ if (!$zone->dmg_wr_known)
+ 	$best_dmg = '<div title="Damage WR unknown">Best Damage [ ? ]</div>';
+ 	
+ $best_box_info =
+"Maximum scores possible based on current highest known Damages and Multipliers.
+Note: The damages and multipliers are calculated with a similar strat.
+For example on Freeway Fury/9 the highest known multiplier with the 'wall-strat' is 15 but a higher muliplier was achieved on that zone.";
+ 
+ $star_info = "Stars should been seen as a award for a crash and show, on which zones you can improve 'easier'/most 'easily'.
+1 star stands for a 'standard' score and 10 stars for a 'mega' score.
+ ";
+ 
+ $wr_info = "Former known World Records. List goes that far back as it is known.";
+ ?>
+ 
+
+<?php echo $this->zonenav($action, $zone->id);?> 
+<?php echo $this->zoneheader($title, $action, $zone);?>
+
+
+
+<?php //echo $zone->glitch;  {echo 'Yes';} else {echo 'No';}?>
+ 
+ <h1 class="text-center" title="<?php echo $wr_info;?>"><?php echo 'World Records History' ?></h1>
+ <table class="table">
+ <?php foreach ($wrs as $wr) :?>
+ <tr>
+     <?php echo $this->scorehelper($wr, 'wr'); ?>
+ </tr>
+ <?php endforeach; ?>
+ </table>
+ 
+ <div class="row">
+<div class="col-md-3"></div>
+ 	<div class="panel panel-default col-md-6" title="<?php echo $best_box_info;?>">
+ <table class="table table-condensed table-striped">
+ 	<tr>
+	 	<th class="text-center">
+	 		<?php echo $best_dmg;?>
+	 	</th>
+	 	<th></th>
+	 	<th class="text-center">
+	 		Best Multi
+	 	</th>
+	 	<th></th>
+	 	<th class="text-center">
+	 		Best Total
+	 	</th>
+	 </tr>
+ 	
+ 	<tr>
+	 <td class="text-center"><?php echo number_format($zone->best_damage) ?></td>
+	 <td class="text-center">x</td>
+	 <td class="text-center"><?php echo number_format($zone->best_multi) ?></td>
+	 <td class="text-center">=</td>
+	 <td class="text-center"><?php echo number_format($zone->best_total) ?></td>
+	</tr>
+ 		</table>
+ </div>
+ <div class="col-md-3"></div>
+ </div>
+ 		
+   <div class="row">
+ <div class="col-md-3"></div>
+ 	<div class="panel panel-default col-md-6" title="<?php echo $star_info;?>">
+ 	<div class="panel-heading text-center"><h1>Score Rating</h1></div>
+ 	<table class="table table-condensed table-striped">
+ <?php foreach ($zone->stars as $nb_stars => $star_score) : ?>
+ 			<tr>
+ 				<td class="text-right score-small">
+ 					<?php echo '$'. number_format($star_score);?>
+ 				</td>
+ 				<td class="text-center">
+ 					<?php echo $this->starhelper($nb_stars, array('height' => '18px')); ?>
+ 				</td>
+ 			</tr>
+ <?php endforeach;?>
+ 		</table>
+	</div>
+ <div class="col-md-3"></div>
+	</div>

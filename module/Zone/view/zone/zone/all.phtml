@@ -1,0 +1,23 @@
+<?php
+
+ $title = 'Zones';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <table class="table">
+ <?php foreach ($zones as $zone) : ?>
+ <tr>
+     <td><a href="<?php echo $this->url('zone',
+             array('id' => $zone->id));?>">
+			 <?php echo $this->escapeHtml($zone->id.' - '.$zone->name); ?></a></td>
+     <td><?php
+     	echo $this->imagehelper('logos/xbox.png', array('alt_title' => 'Xbox', 'height' => '25px'));
+     	echo $this->imagehelper('logos/gc.png', array('alt_title' => 'Gamecube', 'height' => '25px'));
+     	if ($zone->ps2) echo $this->imagehelper('logos/ps2.png', array('alt_title' => 'PS2', 'height' => '25px'));
+ 	?></td>
+ 	
+ 	<?php $zone_wr = $wrs->current(); echo $this->scorehelper($zone_wr, 'zone_index');?>
+ </tr>
+ <?php endforeach; ?>
+ </table>

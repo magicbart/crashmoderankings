@@ -1,0 +1,19 @@
+<?php
+
+ $title = $player->name;
+ $this->headTitle($title);
+ $action = 'index';
+ ?>
+ 
+ <?php echo $this->playerheader($action, $player, $platforms);?>
+
+<div class="panel panel-default">
+	<div class="panel-heading text-center"><h1>Personal Records</h1></div>
+ <table class="table table-striped table-hover">
+ <?php foreach ($prs as $pr) :?>
+ <tr>
+ <?php echo $this->scorehelper($pr, 'pr');?>
+ </tr>
+ <?php endforeach; ?>
+ </table>
+ </div>

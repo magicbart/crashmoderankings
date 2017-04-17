@@ -1,0 +1,23 @@
+<?php
+
+ $title = 'Delete Strat';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+
+ <p>Are you sure that you want to delete the strat <?php echo 'Zone '.$strat->zone.' - '.$strat->name; ?> ?
+ BE EXTREMELY CAREFUL THIS CAN'T BE CANCELLED.
+ </p>
+ <?php
+ $url = $this->url('adminstrats', array(
+     'action' => 'delete',
+     'id'     => $strat->id,
+ ));
+ ?>
+ <form action="<?php echo $url; ?>" method="post">
+ <div>
+     <input type="hidden" name="id" value="<?php echo $strat->id; ?>" />
+     <input type="submit" name="del" value="Yes" />
+     <input type="submit" name="del" value="No" />
+ </div>
+ </form>

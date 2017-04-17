@@ -1,0 +1,123 @@
+form label, form label span {
+display: block;
+}
+
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.zf-green {
+    color: #68b604;
+}
+
+.btn-success {
+  background-color: #57a900;
+  background-image: -moz-linear-gradient(top, #70d900, #57a900);
+  background-image: -ms-linear-gradient(top, #70d900, #57a900);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#70d900), to(#57a900));
+  background-image: -webkit-linear-gradient(top, #70d900, #57a900);
+  background-image: -o-linear-gradient(top, #70d900, #57a900);
+  background-image: linear-gradient(top, #70d900, #57a900);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#70d900', endColorstr='#57a900', GradientType=0);
+}
+
+.btn-success:hover,
+.btn-success:active,
+.btn-success.active,
+.btn-success.disabled,
+.btn-success[disabled] {
+  background-color: #57a900;
+}
+
+.btn-success:active, .btn-success.active {
+  background-color: #57a900;
+}
+
+div.container a.brand {
+    background: url("../img/zf2-logo.png") no-repeat scroll 0 10px transparent;
+    margin-left: 0;
+    padding: 8px 20px 12px 40px;
+}
+
+.panel-heading h1, .panel-heading h2, .panel-heading h3, .panel-heading h4 {
+	margin : 0;
+}
+
+.padding-table {
+	margin-bottom : 20px;
+	margin-top : 20px;
+}
+
+.no-margin {
+	margin : 0;
+}
+
+.no-bottom-margin {
+	margin-bottom : 0;
+}
+
+.small-top-margin {
+	margin-top : 10px;
+}
+
+.no-padding {
+	padding : 0;
+}
+
+img.margin {
+	margin-left : 10px;
+	margin-right : 10px;
+}
+
+.score {
+	font-size : 24px;
+}
+
+.score-small {
+	font-size : 18px;
+}
+
+.vcenter {
+	vertical-align : middle;
+}
+
+textarea {
+    height: 400px !important;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  vertical-align: middle;
+}
+
+.panel-default {
+	padding : 0;
+}
+
+html, body {
+    height: 100%;
+}
+.wrapper {
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -50px; /* the bottom margin is the negative value of the footer's height */
+}
+.footer, .push {
+    height: 50px; /* .push must be the same height as .footer */
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+    border: 0;
+}
+
+.scrollable-menu {
+    height: auto;
+    max-height: 400px;
+    overflow-x: hidden;
+}
