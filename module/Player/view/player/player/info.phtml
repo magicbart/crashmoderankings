@@ -108,7 +108,7 @@
 	<table class="table table-condensed table-striped">
 	<tr><td></td>
 	<?php $i = 1; foreach ($cars as $car_name => $nb) :
-	$car_image = 'cars/'.strtolower(str_replace(' ', '', $car_name));
+	$car_image = 'cars/'.strtolower(str_replace(' ', '', $car_name)) . '.png';
 	if ($i%6 == 0)
 		echo '</tr><tr>';
 	$i = $i + 1;?>

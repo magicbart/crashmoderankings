@@ -27,7 +27,7 @@
  		<td class="h1 col-md-6"><?php echo $strat->name;?></td>
  		<td class="col-md-3"><?php
  			foreach ($strat->cars as $car) {
- 				echo $this->imageHelper('cars/'.strtolower(str_replace(' ', '', $car)), array('alt_title' => $car, 'height' => $img_size));
+ 				echo $this->imageHelper('cars/'.strtolower(str_replace(' ', '', $car)) . '.png', array('alt_title' => $car, 'height' => $img_size));
  			}
  		?></td>
  		</table>
