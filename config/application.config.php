@@ -11,7 +11,6 @@ return array(
 		'Ranking',
 		'Admin',
 		'Vids',
-		//'Common',
 		'Log',
     ),
 
@@ -23,9 +22,7 @@ return array(
         // Module class.
         'module_paths' => array(
             './module',
-		    //  '../module',
-            //'/home/magicbart/Projects/zf2/zf2-common',
-            '/home/magicbart/Projects/zf2/zf2-log',
+            '../zf2/zf2-log',
             './vendor',
         ),
 
