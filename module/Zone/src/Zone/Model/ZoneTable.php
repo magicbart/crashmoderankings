@@ -18,11 +18,11 @@ class ZoneTable	{
 		$resultSet = $this->tableGateway->select();
 		return $resultSet;
 	}
-	
+
 	public function getZoneArray()	{
 		$zones = array();
-		$results = $this->tableGateway->select();
-		while ($row = $results->current()) {
+        $resultSet = $this->tableGateway->select();
+        foreach ($resultSet as $row) {
     		$zones[$row->id] = $row->id.' - '.$row->name;
 		}
 		return $zones;
@@ -38,15 +38,15 @@ class ZoneTable	{
 		$row->stars = $this->getStars($id);
 		return $row;
 	}
-	
+
 	public function getStars($zone_id)	{
 		$zone_id = (int) $zone_id;
 		$stars = array();
 		$sql = new Sql($this->tableGateway->getAdapter(), 'stars');
 		$select = $sql->select()->where(array('zone' => $zone_id))->columns(array('score','nb_stars'))->order('nb_stars DESC');
 		$stmt = $sql->prepareStatementForSqlObject($select);
-		$results = $stmt->execute();
-		while ($row = $results->current()) {
+        $resultSet = $stmt->execute();
+        foreach ($resultSet as $row) {
     		$stars[(int)$row['nb_stars']] = (int) $row['score'];
 		}
 		return $stars;
@@ -73,7 +73,7 @@ class ZoneTable	{
 			throw new \Exception('Zone id does not exist');
 		}
 	}
-	
+
 	private function saveStars(Zone $zone)	{
 		$id = (int) $zone->id;
 		$changed = false;
@@ -90,12 +90,12 @@ class ZoneTable	{
 				$this->updateStars($id);
 		}
 	}
-	
+
 	public function updateStars($zone_id)	{
 		$id = (int) $zone_id;
 		$stmt = $this->tableGateway->getAdapter()->createStatement();
-    	$stmt->prepare('CALL update_stars(?)'); 
-	    $stmt->getResource()->bindParam(1, $zone_id, \PDO::PARAM_INT); 
+    	$stmt->prepare('CALL update_stars(?)');
+	    $stmt->getResource()->bindParam(1, $zone_id, \PDO::PARAM_INT);
 	    $stmt->execute();
 	}
 }

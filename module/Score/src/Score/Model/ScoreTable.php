@@ -23,7 +23,7 @@ class ScoreTable	{
 		$resultSet = $this->tableGateway->select();
 		return $resultSet;
 	}
-	
+
 	public function getScore($id)	{
 		$id  = (int) $id;
 		$rowset = $this->getScores(array('id' => $id));
@@ -33,7 +33,7 @@ class ScoreTable	{
 		}
 		return $row;
 	}
-	
+
 	public function getScores($params, $paginated = false)	{
 		$select = new Select('scores');
 		$select->join('players', 'player=players.id', array('player_name' => 'name', 'player_url' => 'name_url'))
@@ -88,8 +88,8 @@ class ScoreTable	{
 		if(in_array('wr', $params))	{
 			$select->where(array('scores.chart_rank' => 1));
 		}
-		
-		
+
+
 		if ($paginated) {
              $resultSetPrototype = new ResultSet();
              $resultSetPrototype->setArrayObjectPrototype(new Score());
@@ -104,7 +104,7 @@ class ScoreTable	{
 		$resultSet = $this->tableGateway->selectWith($select);
 		return $resultSet;
 	}
-	
+
 	public function getBestVids($params)	{
 		//SELECT * from scores where (zone, score) IN (SELECT zone, max(score) from scores where glitch in ('None', 'Glitch') group by zone) order by zone asc
 		$resultSet = $this->tableGateway->select( function (Select $select) use ($params)	{
@@ -125,14 +125,14 @@ class ScoreTable	{
 			}
 			else
 				$sub->where(array('glitch' => array('None', 'Glitch')));
-				
+
 			if(array_key_exists('platform', $params))	{
 				$sub->where(array('platform' => $params['platform']));
 			}
 			if(array_key_exists('freq', $params))	{
 				$sub->where(array('freq' => $params['freq']));
 			}
-			
+
 			$select->join('players', 'player=players.id', array('player_name' => 'name', 'player_url' => 'name_url'))
 				->join('countries', 'players.country=countries.id', array('country_name' => 'name', 'country_iso' => 'iso'))
 				->join('cars', 'car=cars.id', array('car_name' => 'name'), 'left')
@@ -142,9 +142,9 @@ class ScoreTable	{
 		});
 		return $resultSet;
 	}
-	
+
 	public function getBestMultiVid($params)	{
-		//SELECT * FROM scores WHERE id = (SELECT id FROM scores AS lookup WHERE lookup.zone = scores.zone ORDER BY multi DESC , score DESC LIMIT 1 ) ORDER BY zone ASC 
+		//SELECT * FROM scores WHERE id = (SELECT id FROM scores AS lookup WHERE lookup.zone = scores.zone ORDER BY multi DESC , score DESC LIMIT 1 ) ORDER BY zone ASC
 		$resultSet = $this->tableGateway->select( function (Select $select) use ($params)	{
 			/*$sub = new Select();
 			$sub->from(array('temp' => 'scores'))
@@ -153,7 +153,7 @@ class ScoreTable	{
 				->where('temp.zone=scores.zone')
 				->order('temp.multi DESC, temp.score DESC')
 				->limit(1);*/
-			
+
 			$select->join('players', 'player=players.id', array('player_name' => 'name', 'player_url' => 'name_url'))
 				->join('countries', 'players.country=countries.id', array('country_name' => 'name', 'country_iso' => 'iso'))
 				->join('cars', 'car=cars.id', array('car_name' => 'name'), 'left')
@@ -163,7 +163,7 @@ class ScoreTable	{
 		});
 		return $resultSet;
 	}
-	
+
 	public function getNRs($country_id)	{
 		$resultSet = $this->tableGateway->select( function (Select $select) use ($country_id)	{
 			$select->join('players', 'player=players.id', array('player_name' => 'name', 'player_url' => 'name_url'))
@@ -176,7 +176,7 @@ class ScoreTable	{
 		return $resultSet;
 	}
 
-	
+
 	public function saveScore(Score $score)	{
 		$id = (int) $score->id;
 		if ($id == 0) {
@@ -189,7 +189,7 @@ class ScoreTable	{
 			}
 		}
 	}
-	
+
 	private function addScore(Score $score)	{
 		$stmt = $this->tableGateway->getAdapter()->createStatement();
     	$stmt->prepare('CALL add_score(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)');
@@ -212,7 +212,7 @@ class ScoreTable	{
 	    $stmt->getResource()->bindParam(17, $score->strat, \PDO::PARAM_INT);
 	    $stmt->execute();
 	}
-	
+
 	private function updateScore(Score $score)	{
 		$id = (int) $score->id;
 		$data = array(
@@ -240,7 +240,7 @@ class ScoreTable	{
 	    $stmt->getResource()->bindParam(3, $score->glitch, \PDO::PARAM_STR);
 	    $stmt->execute();
 	}
-	
+
 	public function deleteScore($id)	{
 		$id = (int) $id;
 		$stmt = $this->tableGateway->getAdapter()->createStatement();
@@ -248,19 +248,19 @@ class ScoreTable	{
 	    $stmt->getResource()->bindParam(1, $id, \PDO::PARAM_INT);
 	    $stmt->execute();
 	}
-	
+
 	public function updateStars($zone_id)	{
 		$this->tableGateway->update(array('stars' => 'get_stars('.$zone_id.',score)'), array('score' => $star_score));
 	}
-	
+
 	public function getTopScores($zone_id)	{
 		return $this->getScores(array('ranked', 'zone_id' => $zone_id, 'order' => 'score DESC', 'limit' => 25));
 	}
-	
+
 	public function getFreezeScores($zone_id)	{
 		return $this->getScores(array('zone_id' => $zone_id, 'order' => 'score DESC', 'glitch' => 'Freeze'));
 	}
-	
+
 	public function getUnsortedScores($zone_id, $params)	{
 		$resultSet = $this->tableGateway->select( function (Select $select) use ($zone_id, $params)	{
 			$sub = new Select('scores');
@@ -270,7 +270,7 @@ class ScoreTable	{
 			if(array_key_exists('glitch', $params))	{
 				$sub->where(array('glitch' => $params['glitch']));
 			}
-			
+
 			$select->join('players', 'player=players.id', array('player_name' => 'name', 'player_url' => 'name_url'))
 				->join('countries', 'players.country=countries.id', array('country_name' => 'name', 'country_iso' => 'iso'))
 				->join('cars', 'car=cars.id', array('car_name' => 'name'), 'left')
@@ -283,16 +283,16 @@ class ScoreTable	{
 		});
 		return $resultSet;
 	}
-	
+
 	public function getBestScore($params)	{
 		$params['limit'] = 1;
 		return $this->getScores($params)->current();
 	}
-	
+
 	public function getFormerWRs($zone_id)	{
 		return $this->getScores(array('former_wr', 'zone_id' => $zone_id, 'order' => 'score ASC'));
 	}
-	
+
 	public function getCurrentWRs()	{
 		return $this->getScores(array('wr', 'order' => 'zone ASC'));
 	}
@@ -308,14 +308,14 @@ class ScoreTable	{
 	public function getLastAchieved($player_id)	{
 		return $this->getScores(array('player_id' => $player_id, 'order' => 'realisation DESC'), true);
 	}
-	
+
 	public function getCarArray()	{
 		$cars = array();
 		$sql = new Sql($this->tableGateway->getAdapter(), 'cars');
 		$select = $sql->select();
 		$stmt = $sql->prepareStatementForSqlObject($select);
-		$results = $stmt->execute();
-		while ($row = $results->current()) {
+        $resultSet = $stmt->execute();
+        foreach ($resultSet as $row) {
     		$cars[$row['id']] = $row['name'];
 		}
 		return $cars;

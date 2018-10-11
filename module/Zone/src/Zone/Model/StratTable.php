@@ -18,7 +18,7 @@ class StratTable	{
 		$resultSet = $this->tableGateway->select();
 		return $resultSet;
 	}
-	
+
 	public function getStratArray($zone_id) {
 		$strats = array();
 		$results = $this->getStrats(array('zone_id' => $zone_id, 'order' => 'name ASC'));
@@ -27,7 +27,7 @@ class StratTable	{
 		}
 		return $strats;
 	}
-	
+
 	public function getStrat($id) {
 		$id  = (int) $id;
 		$rowset = $this->tableGateway->select(array('id' => $id));
@@ -38,7 +38,7 @@ class StratTable	{
 		$row->cars = $this->getStratCars($id);
 		return $row;
 	}
-	
+
 	public function getStrats($params)	{
 		$resultSet = $this->tableGateway->select( function (Select $select) use ($params)	{
 			if(array_key_exists('zone_id', $params))	{
@@ -55,7 +55,7 @@ class StratTable	{
 		}
 		return $resultArray;
 	}
-	
+
 	public function getStratCars($id)	{
 		$id  = (int) $id;
 		$cars = array();
@@ -64,8 +64,8 @@ class StratTable	{
 		$select->join('cars', 'car=cars.id', array('car_name' => 'name'), 'left');
 		$select->where(array('strat' => $id));
 		$stmt = $sql->prepareStatementForSqlObject($select);
-		$results = $stmt->execute();
-		while ($row = $results->current()) {
+        $resultSet = $stmt->execute();
+        foreach ($resultSet as $row) {
     		$cars[(int) $row['car']] = $row['car_name'];
 		}
 		return $cars;
@@ -99,7 +99,7 @@ class StratTable	{
 			}
 		}
 	}
-	
+
 	private function saveStratCars($id, array $cars)	{
 		$sql = new Sql($this->tableGateway->getAdapter(), 'strats_cars');
 		$delete = $sql->delete();
@@ -113,7 +113,7 @@ class StratTable	{
 			$stmt->execute();
 		}
 	}
-	
+
 	public function deleteStrat($id)	{
 		$this->tableGateway->delete(array('id' => (int) $id));
 	}

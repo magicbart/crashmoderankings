@@ -14,25 +14,25 @@ class PlayerTable	{
 	public function __construct(TableGateway $tableGateway)	{
 		$this->tableGateway = $tableGateway;
 	}
-	
+
 	public function getPlayerArray()	{
 		$players = array();
-		$results = $this->getPlayers(array('order' => 'name ASC'));
-		while ($row = $results->current()) {
-    		$players[$row->id] = $row->name;
-		}
+        $resultSet = $this->getPlayers(array('order' => 'name ASC'));
+        foreach ($resultSet as $row) {
+            $players[$row->id] = $row->name;
+        }
 		return $players;
 	}
-	
+
 	public function getPlayerArrayURL()	{
 		$players = array();
-		$results = $this->getPlayers(array('order' => 'name ASC'));
-		while ($row = $results->current()) {
+        $resultSet = $this->getPlayers(array('order' => 'name ASC'));
+        foreach ($resultSet as $row) {
     		$players[$row->name_url] = $row->name;
 		}
 		return $players;
 	}
-	
+
 	public function getPlayer($id)	{
 		$resultSet = $this->getPlayers(array('id' => $id));
 		$row = $resultSet->current();
@@ -41,7 +41,7 @@ class PlayerTable	{
 		}
 		return $row;
 	}
-	
+
 	public function getPlayerFromURL($name_url)	{
 		$resultSet = $this->getPlayers(array('name_url' => $name_url));
 		$row = $resultSet->current();
@@ -50,9 +50,9 @@ class PlayerTable	{
 		}
 		return $row;
 	}
-	
+
 	public function getPlayers($params)	{
-		$resultSet = $this->tableGateway->select( function (Select $select) use ($params)	{
+		$resultSet = $this->tableGateway->select(function (Select $select) use ($params)	{
 			$select->join('countries', 'players.country=countries.id', array('country_name' => 'name', 'country_iso' => 'iso'));
 			if(array_key_exists('id', $params))	{
 				$select->where(array('players.id' => $params['id']));
@@ -72,7 +72,7 @@ class PlayerTable	{
 		});
 		return $resultSet;
 	}
-	
+
 	public function savePlayer(Player $player)	{
 		$data = array(
 			'name' => $player->name,
@@ -82,7 +82,7 @@ class PlayerTable	{
 			'wcr_channel'  => $player->wcr_channel,
 			'personnal_channel'  => $player->personnal_channel,
 			'xbl_total'  => $player->xbl_total,
-			
+
 		);
 		$id = (int) $player->id;
 		if ($id == 0) {
@@ -95,36 +95,36 @@ class PlayerTable	{
 			}
 		}
 	}
-	
+
 	public function deletePlayer($player_id)	{
 		$this->tableGateway->delete(array('id' => $player_id));
 	}
-	
+
 	public function getPlatforms($player_id)	{
 		$player_id = (int) $player_id;
 		$platforms = array();
 		$sql = new Sql($this->tableGateway->getAdapter(), 'scores');
 		$select = $sql->select()->where(array('player' => $player_id))->columns(array(new Expression('DISTINCT(platform) as platform')))->order('platform DESC');
 		$stmt = $sql->prepareStatementForSqlObject($select);
-		$results = $stmt->execute();
-		while ($row = $results->current()) {
+        $resultSet = $stmt->execute();
+        foreach ($resultSet as $row) {
 			if(!is_null($row['platform']))
     			$platforms[] = $row['platform'];
 		}
 		return $platforms;
 	}
-	
+
 	public function getPlayersFromCountry($country_id)	{
 		return $this->getPlayers(array('country' => $country_id, 'order' => 'avg_pos_rank ASC'));
-	} 
-	
+	}
+
 	public function getCountries()	{
 		$countries = array();
 		$sql = new Sql($this->tableGateway->getAdapter(), 'countries');
 		$select = $sql->select()->columns(array('id' => 'id', 'name' => 'name'))->order('name ASC');
 		$stmt = $sql->prepareStatementForSqlObject($select);
-		$results = $stmt->execute();
-		while ($row = $results->current()) {
+        $resultSet = $stmt->execute();
+        foreach ($resultSet as $row) {
     		$countries[$row['id']] = $row['name'];
 		}
 		return $countries;
